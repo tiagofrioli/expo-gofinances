@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Header, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper } from './styles';
+import HightlightCard from '../../components/HightlightCard';
+import { Container, Header, HightlightCards, Icon, Photo, User, UserGreeting, UserInfo, UserName, UserWrapper } from './styles';
 
 
 const Dashboard: React.FC = () => {
@@ -17,6 +18,11 @@ const Dashboard: React.FC = () => {
       <Icon name="power" />
       </UserWrapper>
     </Header>
+    <HightlightCards > 
+      <HightlightCard />
+      <HightlightCard />
+      <HightlightCard />
+    </HightlightCards>
    </Container>
   );
   }

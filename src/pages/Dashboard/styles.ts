@@ -58,3 +58,13 @@ export const Icon = styled(Feather)`
  color: ${theme.colors.secondary};
  font-size: ${RFValue(24)}px;
 `;
+
+export const HightlightCards = styled.ScrollView.attrs({
+ horizontal: true,
+ showsHorizontalScrollIndicator: true,
+ contentContainerStyle: {paddingHorizontal: 24}
+})`
+ width: 100%;
+ position: absolute;
+ margin-top: ${RFPercentage(28)}px;
+`;
