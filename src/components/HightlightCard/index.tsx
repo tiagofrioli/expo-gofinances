@@ -1,17 +1,27 @@
 import React from 'react';
 import { Amount, Container, Footer, Header, Icon, LastTransaction, Title } from './styles';
+import { PropsCard } from './types';
 
-const HightlightCard: React.FC = () => {
+const HightlightCard: React.FC<PropsCard> = (props) => {
+
+ const {title, amount, lastTransaction, type} = props;
+
+ const icon = {
+  income: 'arrow-up-circle',
+  outcome: 'arrow-down-circle',
+  total: 'dollar-sign'
+ }
+ 
   return (
-   <Container>
+   <Container type={type}>
     <Header>
-     <Title>Entrada</Title>
-     <Icon name="arrow-up-circle" />
+     <Title type={type}>{title}</Title>
+     <Icon name={icon[type]} type={type} />
     </Header>
 
     <Footer>
-     <Amount>R$ 17.400,00</Amount>
-     <LastTransaction>Útilma entrada dia 13 de Abril</LastTransaction>
+     <Amount type={type}>{amount}</Amount>
+     <LastTransaction type={type}>{lastTransaction}</LastTransaction>
     </Footer>
    </Container>
   );
