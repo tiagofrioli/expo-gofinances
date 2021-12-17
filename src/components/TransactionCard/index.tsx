@@ -10,18 +10,21 @@ import {
   Title,
   Date,
 } from "./styles";
+import { PropsTransactionCard } from "./types";
 
-const TransactionCard: React.FC = () => {
+const TransactionCard: React.FC<PropsTransactionCard> = (props) => {
+  const { data } = props;
+
   return (
     <Container>
-      <Title>Desenvolvimento de site</Title>
-      <Amount>R$ 12.000,00</Amount>
+      <Title>{data.title}</Title>
+      <Amount>{data.amount}</Amount>
       <Footer>
         <Category>
           <Icon name="dollar-sign" />
-          <CategoryName>Vendas</CategoryName>
+          <CategoryName>{data.category.name}</CategoryName>
         </Category>
-        <Date>13/04/2021</Date>
+        <Date>{data.date}</Date>
       </Footer>
     </Container>
   );

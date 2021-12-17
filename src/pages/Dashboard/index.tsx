@@ -1,6 +1,7 @@
 import React from "react";
 import HightlightCard from "../../components/HightlightCard";
 import TransactionCard from "../../components/TransactionCard";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 import {
   Container,
   Header,
@@ -8,6 +9,7 @@ import {
   Icon,
   Photo,
   Title,
+  TransactionList,
   Transactions,
   User,
   UserGreeting,
@@ -15,8 +17,36 @@ import {
   UserName,
   UserWrapper,
 } from "./styles";
+import { PropsTransactionCard } from "../../components/TransactionCard/types";
 
 const Dashboard: React.FC = () => {
+  const data: PropsTransactionCard = [
+    {
+      title: "Desenvolvimento de sites",
+      amount: "R$ 12.000,00",
+      category: { name: "Vendas", icon: "dollar-sign" },
+      date: "13/04/2021",
+    },
+    {
+      title: "Desenvolvimento de sites",
+      amount: "R$ 12.000,00",
+      category: { name: "Vendas", icon: "dollar-sign" },
+      date: "13/04/2021",
+    },
+    {
+      title: "Desenvolvimento de sites",
+      amount: "R$ 12.000,00",
+      category: { name: "Vendas", icon: "dollar-sign" },
+      date: "13/04/2021",
+    },
+    {
+      title: "Desenvolvimento de sites",
+      amount: "R$ 12.000,00",
+      category: { name: "Vendas", icon: "dollar-sign" },
+      date: "13/04/2021",
+    },
+  ];
+
   return (
     <Container>
       <Header>
@@ -58,7 +88,14 @@ const Dashboard: React.FC = () => {
 
       <Transactions>
         <Title>Listagem</Title>
-        <TransactionCard />
+        <TransactionList
+          data={data}
+          renderItem={({ item }) => <TransactionCard data={item} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: getBottomSpace(),
+          }}
+        />
       </Transactions>
     </Container>
   );
