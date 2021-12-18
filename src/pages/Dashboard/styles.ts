@@ -1,8 +1,10 @@
 import { Feather } from "@expo/vector-icons";
+import { FlatList } from "react-native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 import theme from "../../global/styles/theme";
+import { ListProps } from "./types";
 
 export const Container = styled.View`
   flex: 1;
@@ -77,4 +79,6 @@ export const Title = styled.Text`
   font-family: ${theme.fonts.regular};
 `;
 
-export const TransactionList = styled.FlatList``;
+export const TransactionList = styled(
+  FlatList as new () => FlatList<ListProps>
+)``;

@@ -17,11 +17,12 @@ import {
   UserName,
   UserWrapper,
 } from "./styles";
-import { PropsTransactionCard } from "../../components/TransactionCard/types";
+import { ListProps } from "./types";
 
 const Dashboard: React.FC = () => {
-  const data = [
+  const data: ListProps[] = [
     {
+      id: "1",
       type: "positive",
       title: "Desenvolvimento de sites",
       amount: "R$ 12.000,00",
@@ -29,6 +30,7 @@ const Dashboard: React.FC = () => {
       date: "13/04/2021",
     },
     {
+      id: "2",
       type: "negative",
       title: "Desenvolvimento de sites",
       amount: "R$ 12.000,00",
@@ -36,6 +38,7 @@ const Dashboard: React.FC = () => {
       date: "13/04/2021",
     },
     {
+      id: "3",
       type: "positive",
       title: "Desenvolvimento de sites",
       amount: "R$ 12.000,00",
@@ -43,6 +46,8 @@ const Dashboard: React.FC = () => {
       date: "13/04/2021",
     },
     {
+      id: "4",
+      type: "negative",
       title: "Desenvolvimento de sites",
       amount: "R$ 12.000,00",
       category: { name: "Vendas", icon: "dollar-sign" },
@@ -93,6 +98,7 @@ const Dashboard: React.FC = () => {
         <Title>Listagem</Title>
         <TransactionList
           data={data}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionCard data={item} />}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
