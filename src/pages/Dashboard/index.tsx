@@ -20,20 +20,23 @@ import {
 import { PropsTransactionCard } from "../../components/TransactionCard/types";
 
 const Dashboard: React.FC = () => {
-  const data: PropsTransactionCard = [
+  const data = [
     {
+      type: "positive",
       title: "Desenvolvimento de sites",
       amount: "R$ 12.000,00",
       category: { name: "Vendas", icon: "dollar-sign" },
       date: "13/04/2021",
     },
     {
+      type: "negative",
       title: "Desenvolvimento de sites",
       amount: "R$ 12.000,00",
       category: { name: "Vendas", icon: "dollar-sign" },
       date: "13/04/2021",
     },
     {
+      type: "positive",
       title: "Desenvolvimento de sites",
       amount: "R$ 12.000,00",
       category: { name: "Vendas", icon: "dollar-sign" },

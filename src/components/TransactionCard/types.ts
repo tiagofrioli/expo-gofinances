@@ -1,5 +1,6 @@
 export interface PropsTransactionCard {
   data: {
+    type: "negative" | "positive";
     title: string;
     amount: string;
     category: Category;
@@ -10,4 +11,8 @@ export interface PropsTransactionCard {
 interface Category {
   name: string;
   icon: string;
+}
+
+export interface TransactionProps {
+  type: "positive" | "negative";
 }
