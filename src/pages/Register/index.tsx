@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { Container, Header, Title } from "./styles";
+import Input from "../../components/Forms/Input";
+
+import { Container, Form, Header, Title } from "./styles";
 
 const Register: React.FC = () => {
   return (
@@ -8,6 +9,10 @@ const Register: React.FC = () => {
       <Header>
         <Title>Cadastro</Title>
       </Header>
+      <Form>
+        <Input placeholder="Nome" />
+        <Input placeholder="Preço" />
+      </Form>
     </Container>
   );
 };
