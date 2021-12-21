@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../components/Forms/Button";
 import Input from "../../components/Forms/Input";
+import TransactionTypeButton from "../../components/Forms/TransactionTypeButton";
 
-import { Container, Fields, Form, Header, Title } from "./styles";
+import { Container, Fields, Form, GroupButtons, Header, Title } from "./styles";
 
 const Register: React.FC = () => {
+  const [selectedButton, setSelectedButton] = useState("");
+
+  function handleButtonSelected(type: "income" | "outcome") {
+    setSelectedButton(type);
+  }
   return (
     <Container>
       <Header>
@@ -14,6 +20,20 @@ const Register: React.FC = () => {
         <Fields>
           <Input placeholder="Nome" />
           <Input placeholder="Preço" />
+          <GroupButtons>
+            <TransactionTypeButton
+              onPress={() => handleButtonSelected("income")}
+              isActive={selectedButton === "income"}
+              type="income"
+              title="Income"
+            />
+            <TransactionTypeButton
+              onPress={() => handleButtonSelected("outcome")}
+              type="outcome"
+              title="Outcome"
+              isActive={selectedButton === "outcome"}
+            />
+          </GroupButtons>
         </Fields>
         <Button title="Enviar" />
       </Form>
