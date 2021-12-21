@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../../components/Forms/Button";
+import CategorySelect from "../../components/Forms/CategorySelect";
 import Input from "../../components/Forms/Input";
 import TransactionTypeButton from "../../components/Forms/TransactionTypeButton";
 
@@ -34,6 +35,8 @@ const Register: React.FC = () => {
               isActive={selectedButton === "outcome"}
             />
           </GroupButtons>
+
+          <CategorySelect title="Categoria" />
         </Fields>
         <Button title="Enviar" />
       </Form>
