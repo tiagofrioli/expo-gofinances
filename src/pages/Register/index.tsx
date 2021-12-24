@@ -3,21 +3,25 @@ import { Modal } from "react-native";
 import Button from "../../components/Forms/Button";
 import CategorySelect from "../../components/Forms/CategorySelect";
 import Input from "../../components/Forms/Input";
+import InputHookForm from "../../components/Forms/InputHookForm";
 import TransactionTypeButton from "../../components/Forms/TransactionTypeButton";
 import CategorySelectView from "./CategorySelectView";
+import { useForm } from "react-hook-form";
 
 import { Container, Fields, Form, GroupButtons, Header, Title } from "./styles";
+import { FormDataProps } from "./types";
 
 const Register: React.FC = () => {
-  const [selectedButton, setSelectedButton] = useState("");
+  const [transactionTypeSelected, setTransactionTypeSelected] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [category, setCategory] = useState({
     key: "category",
     name: "Categoria",
   });
+  const { control, handleSubmit } = useForm();
 
   function handleButtonSelected(type: "income" | "outcome") {
-    setSelectedButton(type);
+    setTransactionTypeSelected(type);
   }
 
   function handleCloseModal() {
@@ -27,6 +31,17 @@ const Register: React.FC = () => {
   function handleOpenModal() {
     setOpenModal(true);
   }
+
+  function handleRegister(form: FormDataProps) {
+    const data = {
+      name: form.name,
+      amount: form.amount,
+      transactionTypeSelected,
+      category: category.key,
+    };
+    console.log(data);
+  }
+
   return (
     <Container>
       <Header>
@@ -34,12 +49,12 @@ const Register: React.FC = () => {
       </Header>
       <Form>
         <Fields>
-          <Input placeholder="Nome" />
-          <Input placeholder="Preço" />
+          <InputHookForm name="name" control={control} placeholder="Nome" />
+          <InputHookForm name="amount" control={control} placeholder="Preço" />
           <GroupButtons>
             <TransactionTypeButton
               onPress={() => handleButtonSelected("income")}
-              isActive={selectedButton === "income"}
+              isActive={transactionTypeSelected === "income"}
               type="income"
               title="Income"
             />
@@ -47,13 +62,13 @@ const Register: React.FC = () => {
               onPress={() => handleButtonSelected("outcome")}
               type="outcome"
               title="Outcome"
-              isActive={selectedButton === "outcome"}
+              isActive={transactionTypeSelected === "outcome"}
             />
           </GroupButtons>
 
           <CategorySelect title={category.name} onPress={handleOpenModal} />
         </Fields>
-        <Button title="Enviar" />
+        <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
       </Form>
 
       <Modal visible={openModal}>
