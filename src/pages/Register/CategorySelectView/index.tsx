@@ -3,12 +3,26 @@ import { FlatList } from "react-native";
 import Button from "../../../components/Forms/Button";
 
 import { categories } from "../../../utils/categories";
-import { Container, Header, Title } from "../styles";
-import { Category, Footer, Icon, Name, Separator } from "./styles";
-import { CategorySelectProps } from "./types";
 
-const CategorySelect: React.FC<CategorySelectProps> = (props) => {
+import {
+  Category,
+  Container,
+  Footer,
+  Header,
+  Icon,
+  Name,
+  Separator,
+  Title,
+} from "./styles";
+import { CategoryProps, CategorySelectProps } from "./types";
+
+const CategorySelectView: React.FC<CategorySelectProps> = (props) => {
   const { category, setCategory, closeSelectCategory } = props;
+
+  function handleCategorySelect(category: CategoryProps) {
+    setCategory(category);
+  }
+
   return (
     <Container>
       <Header>
@@ -19,7 +33,10 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
         style={{ flex: 1, width: "100%" }}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <Category>
+          <Category
+            onPress={() => handleCategorySelect(item)}
+            isActive={category.key === item.key}
+          >
             <Icon name={item.icon} />
             <Name>{item.name}</Name>
           </Category>
@@ -28,10 +45,10 @@ const CategorySelect: React.FC<CategorySelectProps> = (props) => {
       />
 
       <Footer>
-        <Button title="Selecionar" />
+        <Button title="Selecionar" onPress={closeSelectCategory} />
       </Footer>
     </Container>
   );
 };
 
-export default CategorySelect;
+export default CategorySelectView;

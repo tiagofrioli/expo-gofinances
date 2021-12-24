@@ -1,10 +1,10 @@
 export interface CategorySelectProps {
-  category: string;
-  setCategory: (category: Category) => void;
+  category: CategoryProps;
+  setCategory: (category: CategoryProps) => void;
   closeSelectCategory: () => void;
 }
 
-interface Category {
+export interface CategoryProps {
   key: string;
   name: string;
 }
