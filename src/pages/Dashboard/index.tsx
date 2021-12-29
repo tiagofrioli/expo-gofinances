@@ -7,6 +7,7 @@ import {
   Header,
   HightlightCards,
   Icon,
+  LogoutButton,
   Photo,
   Title,
   TransactionList,
@@ -70,7 +71,9 @@ const Dashboard: React.FC = () => {
               <UserName>Tiago</UserName>
             </User>
           </UserInfo>
-          <Icon name="power" />
+          <LogoutButton onPress={() => {}}>
+            <Icon name="power" />
+          </LogoutButton>
         </UserWrapper>
       </Header>
       <HightlightCards>

@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { FlatList } from "react-native";
+import { BorderlessButton } from "react-native-gesture-handler";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
@@ -82,3 +83,5 @@ export const Title = styled.Text`
 export const TransactionList = styled(
   FlatList as new () => FlatList<ListProps>
 )``;
+
+export const LogoutButton = styled(BorderlessButton)``;
