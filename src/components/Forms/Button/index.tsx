@@ -3,9 +3,9 @@ import { Container, Title } from "./styles";
 import { ButtonProps } from "./types";
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { title, ...rest } = props;
+  const { title, onPress, ...rest } = props;
   return (
-    <Container {...rest}>
+    <Container onPress={onPress} {...rest}>
       <Title>{title}</Title>
     </Container>
   );
