@@ -1,13 +1,18 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Alert, Modal } from "react-native";
+import uuid from "react-native-uuid";
 import Button from "../../components/Forms/Button";
 import CategorySelect from "../../components/Forms/CategorySelect";
-import Input from "../../components/Forms/Input";
 import InputHookForm from "../../components/Forms/InputHookForm";
 import TransactionTypeButton from "../../components/Forms/TransactionTypeButton";
 import CategorySelectView from "./CategorySelectView";
-import { useForm } from "react-hook-form";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Container, Fields, Form, GroupButtons, Header, Title } from "./styles";
 import { FormDataProps } from "./types";
 
@@ -18,17 +23,9 @@ const Register: React.FC = () => {
     key: "category",
     name: "Categoria",
   });
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset } = useForm();
+  const { navigate }: NavigationProp<ParamListBase> = useNavigation();
   const dataCollection = "@gofinance:transactions";
-
-  useEffect(() => {
-    async function loadData() {
-      const data = await AsyncStorage.getItem(dataCollection);
-      console.log(data);
-    }
-
-    loadData();
-  }, []);
 
   function handleButtonSelected(type: "income" | "outcome") {
     setTransactionTypeSelected(type);
@@ -36,7 +33,6 @@ const Register: React.FC = () => {
 
   function handleCloseModal() {
     setOpenModal(false);
-    console.log(openModal);
   }
 
   function handleOpenModal() {
@@ -44,21 +40,34 @@ const Register: React.FC = () => {
   }
 
   async function handleRegister(form: FormDataProps) {
-    const data = {
+    const newData = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
-      transactionTypeSelected,
+      type: transactionTypeSelected,
       category: category.key,
+      date: new Date(),
     };
 
     try {
-      await AsyncStorage.setItem(dataCollection, JSON.stringify(data));
+      const data = await AsyncStorage.getItem(dataCollection);
+      const currentData = data ? JSON.parse(data) : [];
+
+      const dataFormated = [...currentData, newData];
+      await AsyncStorage.setItem(dataCollection, JSON.stringify(dataFormated));
+
+      reset();
+      setTransactionTypeSelected("");
+      setCategory({
+        key: "category",
+        name: "Categoria",
+      });
+
+      navigate("Listagem");
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possivel salvar ");
     }
-    console.log(data);
-    console.log(openModal);
   }
 
   return (
