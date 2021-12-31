@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import HightlightCard from "../../components/HightlightCard";
 import TransactionCard from "../../components/TransactionCard";
 import { getBottomSpace } from "react-native-iphone-x-helper";
@@ -22,9 +22,16 @@ import {
 } from "./styles";
 import { ListProps } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Dashboard: React.FC = () => {
   const [data, setData] = useState<ListProps[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTransactions();
+    }, [])
+  );
 
   async function loadTransactions() {
     const dataKey = "@gofinance:transactions";
