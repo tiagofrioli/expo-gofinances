@@ -2,10 +2,10 @@ import { PropsTransactionCard } from "../../components/TransactionCard/types";
 
 export interface ListProps {
   id: string;
-  type: "negative" | "positive";
-  title: string;
+  type: "outcome" | "income";
+  name: string;
   amount: string;
-  category: Category;
+  category: string;
   date: string;
 }
 

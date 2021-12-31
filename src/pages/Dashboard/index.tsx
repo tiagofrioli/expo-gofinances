@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HightlightCard from "../../components/HightlightCard";
 import TransactionCard from "../../components/TransactionCard";
 import { getBottomSpace } from "react-native-iphone-x-helper";
+import "intl";
+import "intl/locale-data/jsonp/pt-BR";
 import {
   Container,
   Header,
@@ -19,42 +21,46 @@ import {
   UserWrapper,
 } from "./styles";
 import { ListProps } from "./types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Dashboard: React.FC = () => {
-  const data: ListProps[] = [
-    {
-      id: "1",
-      type: "positive",
-      title: "Desenvolvimento de sites",
-      amount: "R$ 12.000,00",
-      category: { name: "Vendas", icon: "dollar-sign" },
-      date: "13/04/2021",
-    },
-    {
-      id: "2",
-      type: "negative",
-      title: "Desenvolvimento de sites",
-      amount: "R$ 12.000,00",
-      category: { name: "Vendas", icon: "dollar-sign" },
-      date: "13/04/2021",
-    },
-    {
-      id: "3",
-      type: "positive",
-      title: "Desenvolvimento de sites",
-      amount: "R$ 12.000,00",
-      category: { name: "Vendas", icon: "dollar-sign" },
-      date: "13/04/2021",
-    },
-    {
-      id: "4",
-      type: "negative",
-      title: "Desenvolvimento de sites",
-      amount: "R$ 12.000,00",
-      category: { name: "Vendas", icon: "dollar-sign" },
-      date: "13/04/2021",
-    },
-  ];
+  const [data, setData] = useState<ListProps[]>([]);
+
+  async function loadTransactions() {
+    const dataKey = "@gofinance:transactions";
+    const response = await AsyncStorage.getItem(dataKey);
+    const transactions = response ? JSON.parse(response) : [];
+
+    const transactionsFormated: ListProps[] = transactions.map(
+      (item: ListProps) => {
+        const amount = Number(item.amount).toLocaleString("pt-Br", {
+          style: "currency",
+          currency: "BRL",
+        });
+
+        const date = Intl.DateTimeFormat("pt-Br", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+        }).format(new Date(item.date));
+
+        return {
+          id: item.id,
+          name: item.name,
+          amount,
+          type: item.type,
+          category: item.category,
+          date,
+        };
+      }
+    );
+
+    setData(transactionsFormated);
+  }
+
+  useEffect(() => {
+    loadTransactions();
+  }, []);
 
   return (
     <Container>

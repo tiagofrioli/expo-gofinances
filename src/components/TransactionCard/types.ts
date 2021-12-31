@@ -1,9 +1,9 @@
 export interface PropsTransactionCard {
   data: {
-    type: "negative" | "positive";
-    title: string;
+    type: "outcome" | "income";
+    name: string;
     amount: string;
-    category: Category;
+    category: string;
     date: string;
   };
 }
@@ -14,5 +14,5 @@ interface Category {
 }
 
 export interface TransactionProps {
-  type: "positive" | "negative";
+  type: "outcome" | "income";
 }
