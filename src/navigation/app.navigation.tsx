@@ -5,6 +5,7 @@ import Register from "../pages/Register";
 import { useTheme } from "styled-components";
 import { Platform } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import Resume from "../pages/Resume";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -52,7 +53,7 @@ const Navigation: React.FC = () => {
           ),
         }}
         name="Resumo"
-        component={Register}
+        component={Resume}
       />
     </Navigator>
   );
