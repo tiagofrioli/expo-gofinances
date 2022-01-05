@@ -13,3 +13,13 @@ interface Category {
   name: string;
   icon: string;
 }
+
+export interface HighLightProps {
+  entries: EntriesExpensiveProps;
+  expensive: EntriesExpensiveProps;
+  totalAmount: EntriesExpensiveProps;
+}
+
+interface EntriesExpensiveProps {
+  total: string;
+}
