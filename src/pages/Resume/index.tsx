@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import HistoryCard from "../../components/HistoryCard";
-
+import { VictoryPie } from "victory-native";
 import { Container, Header, Title } from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { TransactionsProps } from "./types";
+import { CategoryProps, TransactionsProps } from "./types";
 import { categories } from "../../utils/categories";
 
 const Resume: React.FC = () => {
-  const [totalCategories, setTotalCategories] = useState<any[]>([]);
+  const [totalCategories, setTotalCategories] = useState<CategoryProps[]>([]);
 
   async function loadData() {
     const dataKey = "@gofinance:transactions";
@@ -18,7 +18,7 @@ const Resume: React.FC = () => {
     const expensives = responseFormated.filter(
       (expensive: TransactionsProps) => expensive.type === "outcome"
     );
-    const totalcategory: any = [];
+    const totalcategory: CategoryProps[] = [];
     categories.forEach((category) => {
       let categorySum = 0;
       expensives.forEach((expensive: TransactionsProps) => {
@@ -35,6 +35,7 @@ const Resume: React.FC = () => {
             currency: "BRL",
           }),
           color: category.color,
+          totalRaw: categorySum,
         });
       }
     });
@@ -51,6 +52,9 @@ const Resume: React.FC = () => {
       <Header>
         <Title>Resumo por categoria</Title>
       </Header>
+
+      <VictoryPie data={totalCategories} x="name" y="totalRaw" />
+
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         {totalCategories.map((item, index) => (
           <HistoryCard
