@@ -63,11 +63,8 @@ const Register: React.FC = () => {
         name: "Categoria",
       });
 
-      console.log(dataFormated);
-
       navigate("Listagem");
     } catch (error) {
-      console.log(error);
       Alert.alert("Não foi possivel salvar ");
     }
   }

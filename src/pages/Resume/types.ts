@@ -11,4 +11,5 @@ export interface CategoryProps {
   total: string;
   totalRaw: number;
   color: string;
+  percent: string;
 }

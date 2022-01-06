@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import HistoryCard from "../../components/HistoryCard";
 import { VictoryPie } from "victory-native";
-import { Container, Header, Title } from "./styles";
+import { Container, Header, Title, ChartContainer } from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CategoryProps, TransactionsProps } from "./types";
 import { categories } from "../../utils/categories";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const Resume: React.FC = () => {
   const [totalCategories, setTotalCategories] = useState<CategoryProps[]>([]);
@@ -18,6 +20,13 @@ const Resume: React.FC = () => {
     const expensives = responseFormated.filter(
       (expensive: TransactionsProps) => expensive.type === "outcome"
     );
+
+    const expensiveTotal = expensives.reduce(
+      (acumullator: number, expensive: TransactionsProps) => {
+        return acumullator + Number(expensive.amount);
+      },
+      0
+    );
     const totalcategory: CategoryProps[] = [];
     categories.forEach((category) => {
       let categorySum = 0;
@@ -28,6 +37,8 @@ const Resume: React.FC = () => {
       });
 
       if (categorySum > 0) {
+        const percent = `${((categorySum / expensiveTotal) * 100).toFixed(0)}%`;
+
         totalcategory.push({
           name: category.name,
           total: categorySum.toLocaleString("pt-BR", {
@@ -36,6 +47,7 @@ const Resume: React.FC = () => {
           }),
           color: category.color,
           totalRaw: categorySum,
+          percent,
         });
       }
     });
@@ -46,16 +58,36 @@ const Resume: React.FC = () => {
   useEffect(() => {
     loadData();
   }, []);
-
+  console.log("TotalCategories", totalCategories);
   return (
     <Container>
       <Header>
         <Title>Resumo por categoria</Title>
       </Header>
-
-      <VictoryPie data={totalCategories} x="name" y="totalRaw" />
-
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
+      <ChartContainer>
+        <VictoryPie
+          style={{
+            labels: {
+              fill: "white",
+              fontSize: RFValue(18),
+              fontWeight: "bold",
+            },
+          }}
+          labelRadius={50}
+          colorScale={totalCategories.map((category) => category.color)}
+          data={totalCategories}
+          x="percent"
+          y="totalRaw"
+        />
+      </ChartContainer>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flex: 1,
+          paddingHorizontal: 24,
+          paddingBottom: useBottomTabBarHeight(),
+        }}
+      >
         {totalCategories.map((item, index) => (
           <HistoryCard
             key={index}
