@@ -3,7 +3,7 @@ export interface TransactionsProps {
   name: string;
   amount: string;
   category: string;
-  data: string;
+  date: string;
 }
 
 export interface CategoryProps {
