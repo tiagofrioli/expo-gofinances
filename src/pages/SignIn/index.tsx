@@ -5,12 +5,14 @@ import GoFinancesSvg from "../../assets/gofinances-logo.svg";
 import {
   Container,
   Footer,
+  FooterWrapper,
   Header,
   SignInTitle,
   Title,
   TitleWrapper,
 } from "./styles";
 import { RFValue } from "react-native-responsive-fontsize";
+import SocialButton from "../../components/SocialButton";
 
 const SignIn: React.FC = () => {
   return (
@@ -21,9 +23,14 @@ const SignIn: React.FC = () => {
           <Title>Controle suas finanças de forma muito simples</Title>
         </TitleWrapper>
         <SignInTitle>Faça seu login</SignInTitle>
-
-        <Footer></Footer>
       </Header>
+      <Footer>
+        <FooterWrapper>
+          <SocialButton title="Entrar com Google" svg={GoogleSvg} />
+
+          <SocialButton title="Entrar com Apple" svg={AppleSvg} />
+        </FooterWrapper>
+      </Footer>
     </Container>
   );
 };

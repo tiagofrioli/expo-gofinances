@@ -11,6 +11,7 @@ import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/global/styles/theme";
 import Navigation from "./src/navigation/app.navigation";
+import SignIn from "./src/pages/SignIn";
 ("@expo-app-loading");
 
 export default function App() {
@@ -26,7 +27,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <StatusBar barStyle={"light-content"} />
-        <Navigation />
+        <SignIn />
       </NavigationContainer>
     </ThemeProvider>
   );

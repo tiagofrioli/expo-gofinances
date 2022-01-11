@@ -6,6 +6,7 @@ import { useTheme } from "styled-components";
 import { Platform } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Resume from "../pages/Resume";
+import SignIn from "../pages/SignIn";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
