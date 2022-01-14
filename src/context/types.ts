@@ -7,6 +7,7 @@ export interface AuthProviderProps {
 export interface IAuthContextData {
   user: UserProps;
   signInGoogle(): Promise<void>;
+  signInApple(): Promise<void>;
 }
 
 export interface UserProps {

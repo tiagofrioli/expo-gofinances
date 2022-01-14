@@ -7,16 +7,18 @@ import {
   UserProps,
 } from "./types";
 import * as AuthSession from "expo-auth-session";
+import * as AppleAuth from "expo-apple-authentication";
+
 const AuthContext = createContext({} as IAuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>({} as UserProps);
 
+  const { CLIENT_ID } = process.env;
+  const { REDIRECT_URI } = process.env;
+
   async function signInGoogle() {
     try {
-      const CLIENT_ID =
-        "817229847498-nagdte3oml6i7d3er7pev49fjafe1lom.apps.googleusercontent.com";
-      const REDIRECT_URI = "https://auth.expo.io/@tiago.frioli/gofinances";
       const RESPONSE_TYPE = "token";
       const SCOPE = encodeURI("profile email");
 
@@ -45,8 +47,34 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function signInApple() {
+    try {
+      const credential = await AppleAuth.signInAsync({
+        requestedScopes: [
+          AppleAuth.AppleAuthenticationScope.FULL_NAME,
+          AppleAuth.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      if (credential) {
+        const userLogged = {
+          id: String(credential.user),
+          email: credential.email!,
+          name: credential.fullName!.givenName!,
+          photo: undefined,
+        };
+
+        setUser(userLogged);
+      }
+
+      console.log(user);
+    } catch (error) {
+      throw new Error("error");
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInGoogle }}>
+    <AuthContext.Provider value={{ user, signInGoogle, signInApple }}>
       {children}
     </AuthContext.Provider>
   );
