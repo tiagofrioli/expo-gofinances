@@ -10,7 +10,7 @@ import SignIn from "../pages/SignIn";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const Navigation: React.FC = () => {
+const AppNavigation: React.FC = () => {
   const theme = useTheme();
   return (
     <Navigator
@@ -60,4 +60,4 @@ const Navigation: React.FC = () => {
   );
 };
 
-export default Navigation;
+export default AppNavigation;

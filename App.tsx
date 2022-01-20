@@ -4,14 +4,13 @@ import {
   Poppins_700Bold,
   useFonts,
 } from "@expo-google-fonts/poppins";
-import { NavigationContainer } from "@react-navigation/native";
+import Navigation from "./src/navigation";
 import AppLoading from "expo-app-loading";
 import React from "react";
 import { StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components/native";
 import { AuthProvider } from "./src/context/auth";
 import theme from "./src/global/styles/theme";
-import Navigation from "./src/navigation/app.navigation";
 import SignIn from "./src/pages/SignIn";
 ("@expo-app-loading");
 
@@ -26,12 +25,10 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <StatusBar barStyle={"light-content"} />
-        <AuthProvider>
-          <SignIn />
-        </AuthProvider>
-      </NavigationContainer>
+      <StatusBar barStyle={"light-content"} />
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
